@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react"
-import { FaSearch, FaFilter, FaStar } from "react-icons/fa"
+import { FaSearch, FaFilter } from "react-icons/fa"
 import Card from "../components/Card"
 
 // Base de filmes (em produção real viria de uma API)

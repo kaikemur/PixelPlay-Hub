@@ -1,39 +1,46 @@
 import { FaStar, FaPlayCircle } from 'react-icons/fa';
+import { useState } from 'react';
 
-const MovieCard = ({ titulo, ano, genero, nota, imagem, descricao }) => {
+const MovieCard = ({ titulo, ano, genero, nota, imagem, descricao, onViewDetails }) => {
+  const [posterSrc, setPosterSrc] = useState(imagem);
+
   return (
-    <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-2xl hover:scale-105 transition-transform duration-300 flex flex-col h-full">
-      {/* Imagem do Filme */}
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-700/70 bg-slate-900/90 shadow-xl shadow-black/20 transition duration-300 hover:-translate-y-1 hover:border-amber-300/70">
       <div className="relative h-64 overflow-hidden">
-        <img 
-          src={imagem} 
-          alt={`Poster do filme ${titulo}`} 
-          className="w-full h-full object-cover"
+        <img
+          src={posterSrc}
+          alt={`Poster do filme ${titulo}`}
+          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+          loading="lazy"
+          onError={() => setPosterSrc('/fallback-poster.svg')}
         />
-        <div className="absolute top-2 right-2 bg-black bg-opacity-70 text-yellow-400 px-2 py-1 rounded flex items-center gap-1">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+        <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-slate-950/80 px-3 py-1 text-amber-300">
           <FaStar />
           <span className="font-bold">{nota}</span>
         </div>
       </div>
 
-      {/* Conteúdo do Card */}
-      <div className="p-4 flex flex-col flex-grow">
-        <h3 className="text-xl font-bold text-white mb-1">{titulo}</h3>
-        <div className="flex justify-between text-sm text-gray-400 mb-3">
+      <div className="flex flex-grow flex-col p-5">
+        <h3 className="mb-1 text-xl font-bold text-white">{titulo}</h3>
+        <div className="mb-3 flex items-center justify-between text-sm text-slate-400">
           <span>{ano}</span>
-          <span className="bg-red-900 text-red-100 px-2 py-0.5 rounded text-xs">{genero}</span>
+          <span className="rounded-full bg-cyan-500/15 px-3 py-1 text-xs font-semibold text-cyan-300">{genero}</span>
         </div>
-        
-        <p className="text-gray-300 text-sm mb-4 line-clamp-3 flex-grow">
+
+        <p className="mb-5 flex-grow text-sm leading-relaxed text-slate-300 line-clamp-3">
           {descricao}
         </p>
 
-        <button className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center gap-2 transition-colors">
+        <button
+          onClick={onViewDetails}
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-amber-400 px-4 py-2 font-bold text-slate-900 transition hover:bg-amber-300"
+        >
           <FaPlayCircle />
           Ver Detalhes
         </button>
       </div>
-    </div>
+    </article>
   );
 };
 

@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { FaTimes, FaStar } from 'react-icons/fa';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MovieCard from './components/MovieCard';
 import ContactForm from './components/ContactForm';
 
-// Lista diversificada de 50 filmes clássicos e modernos
+// Lista diversificada de 50 filmes classicos e modernos
 const moviesData = [
   { id: 1, titulo: "O Poderoso Chefão", ano: 1972, genero: "Crime/Drama", nota: 9.2, imagem: "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg", descricao: "A história da família Corleone, uma das mais poderosas famílias mafiosas de Nova York." },
   { id: 2, titulo: "Pulp Fiction", ano: 1994, genero: "Crime/Thriller", nota: 8.9, imagem: "https://image.tmdb.org/t/p/w500/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg", descricao: "As vidas de dois assassinos da máfia, um boxeador e um casal de bandidos se entrelaçam." },
@@ -21,11 +22,11 @@ const moviesData = [
   { id: 13, titulo: "Alien: O Oitavo Passageiro", ano: 1979, genero: "Terror/Sci-Fi", nota: 8.4, imagem: "https://image.tmdb.org/t/p/w500/vfrQk5IPloGg1v9Rzbh2Eg3VGyM.jpg", descricao: "A tripulação de uma nave espacial enfrenta uma criatura mortal a bordo." },
   { id: 14, titulo: "Apocalypse Now", ano: 1979, genero: "Guerra/Drama", nota: 8.4, imagem: "https://image.tmdb.org/t/p/w500/gQB8Y5RCMkv2zwzFHbUqX3mTron.jpg", descricao: "Um oficial do exército americano é enviado para assassinar um coronel renegado no Vietnã." },
   { id: 15, titulo: "Toy Story", ano: 1995, genero: "Animação/Comédia", nota: 8.3, imagem: "https://image.tmdb.org/t/p/w500/uXDfjJbdP4ijW5h7Brnt2uAh8Yp.jpg", descricao: "Os brinquedos de um menino ganham vida quando ele não está olhando." },
-  { id: 16, titulo: "Psicose", ano: 1960, genero: "Terror/Suspense", nota: 8.5, imagem: "https://image.tmdb.org/t/p/w500/yz4gVBNkYfVdVdXz9X9X9X9X9X9.jpg", descricao: "Uma secretária rouba dinheiro e se esconde em um motel gerido por um jovem obcecado pela mãe." },
+  { id: 16, titulo: "Psicose", ano: 1960, genero: "Terror/Suspense", nota: 8.5, imagem: "https://placehold.co/600x900/111827/f8fafc?text=Psicose", descricao: "Uma secretária rouba dinheiro e se esconde em um motel gerido por um jovem obcecado pela mãe." },
   { id: 17, titulo: "Cidade de Deus", ano: 2002, genero: "Crime/Drama", nota: 8.6, imagem: "https://image.tmdb.org/t/p/w500/k7eYdWvhYQyRQoU2TB2A2Xu2TfD.jpg", descricao: "A história de dois meninos crescendo em uma favela violenta do Rio de Janeiro." },
-  { id: 18, titulo: "Spirited Away", ano: 2001, genero: "Animação/Fantasia", nota: 8.6, imagem: "https://image.tmdb.org/t/p/w500/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg", descricao: "Chihiro entra em um mundo de espíritos e bruxas para salvar seus pais." },
-  { id: 19, titulo: "O Iluminado", ano: 1980, genero: "Terror/Suspense", nota: 8.4, imagem: "https://image.tmdb.org/t/p/w500/b4gYVcl8pWXdtXTF5X8qF8X8qF8.jpg", descricao: "Uma família se muda para um hotel isolado onde o pai começa a enlouquecer." },
-  { id: 20, titulo: "Wall-E", ano: 2008, genero: "Animação/Sci-Fi", nota: 8.4, imagem: "https://image.tmdb.org/t/p/w500/hBhvMPZ3Y2W2W2W2W2W2W2W2W2W.jpg", descricao: "Um robô de limpeza apaixonado segue sua amada pelo espaço sideral." },
+  { id: 18, titulo: "O Show de Truman", ano: 1998, genero: "Drama/Comédia", nota: 8.2, imagem: "https://placehold.co/600x900/0b1324/22d3ee?text=O+Show+de+Truman", descricao: "Um homem descobre que sua vida inteira e um programa de TV transmitido para o mundo todo." },
+  { id: 19, titulo: "O Iluminado", ano: 1980, genero: "Terror/Suspense", nota: 8.4, imagem: "https://placehold.co/600x900/1f2937/fef08a?text=O+Iluminado", descricao: "Uma família se muda para um hotel isolado onde o pai começa a enlouquecer." },
+  { id: 20, titulo: "Wall-E", ano: 2008, genero: "Animação/Sci-Fi", nota: 8.4, imagem: "https://placehold.co/600x900/0f172a/86efac?text=Wall-E", descricao: "Um robô de limpeza apaixonado segue sua amada pelo espaço sideral." },
   { id: 21, titulo: "Vingadores: Ultimato", ano: 2019, genero: "Ação/Sci-Fi", nota: 8.4, imagem: "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg", descricao: "Os Vingadores restantes tentam reverter o estalo de Thanos e restaurar o universo." },
   { id: 22, titulo: "Jurassic Park", ano: 1993, genero: "Aventura/Sci-Fi", nota: 8.1, imagem: "https://image.tmdb.org/t/p/w500/oU7Oq2kFAAlGqbU4VoAE36g4hoI.jpg", descricao: "Um parque temático com dinossauros clonados sai do controle durante uma visita VIP." },
   { id: 23, titulo: "Titanic", ano: 1997, genero: "Romance/Drama", nota: 7.9, imagem: "https://image.tmdb.org/t/p/w500/9xjZS2rlVxm8SFx8kPC3aIGCOYQ.jpg", descricao: "Um romance proibido floresce a bordo do navio condenado ao desastre." },
@@ -34,15 +35,15 @@ const moviesData = [
   { id: 26, titulo: "O Silêncio dos Inocentes", ano: 1991, genero: "Terror/Thriller", nota: 8.6, imagem: "https://image.tmdb.org/t/p/w500/rplLJ2hPcOQmkFhTqUte0MkEaO2.jpg", descricao: "Uma agente do FBI busca a ajuda de um canibal encarcerado para pegar outro serial killer." },
   { id: 27, titulo: "Seven: Os Sete Crimes Capitais", ano: 1995, genero: "Crime/Mistério", nota: 8.6, imagem: "https://image.tmdb.org/t/p/w500/6yoghtyTpznpBik8EngEmJskVUO.jpg", descricao: "Dois detetives caçam um assassino que usa os sete pecados capitais como motivo." },
   { id: 28, titulo: "À Espera de um Milagre", ano: 1999, genero: "Drama/Fantasia", nota: 8.6, imagem: "https://image.tmdb.org/t/p/w500/velWPhVMQeQKcxggNEU8YmIo52R.jpg", descricao: "Um guarda de prisão descobre que um dos condenados possui um dom divino." },
-  { id: 29, titulo: "V de Vingança", ano: 2005, genero: "Ação/Thriller", nota: 8.1, imagem: "https://image.tmdb.org/t/p/w500/lSy7jM8X8X8X8X8X8X8X8X8X8X8.jpg", descricao: "Um homem mascarado luta contra um governo totalitário em uma Londres futurista." },
+  { id: 29, titulo: "V de Vingança", ano: 2005, genero: "Ação/Thriller", nota: 8.1, imagem: "https://placehold.co/600x900/172554/f8fafc?text=V+de+Vinganca", descricao: "Um homem mascarado luta contra um governo totalitário em uma Londres futurista." },
   { id: 30, titulo: "Amnésia", ano: 2000, genero: "Mistério/Thriller", nota: 8.4, imagem: "https://image.tmdb.org/t/p/w500/yuNs09hvpHVU1cBTCAk9zxsL2oW.jpg", descricao: "Um homem com perda de memória recente tenta encontrar o assassino de sua esposa." },
   { id: 31, titulo: "O Grande Truque", ano: 2006, genero: "Drama/Mistério", nota: 8.5, imagem: "https://image.tmdb.org/t/p/w500/tRNlZbgNCNOpLpbPEz5L8G8A0JN.jpg", descricao: "Dois magos rivais travam uma batalha perigosa para criar o melhor truque de ilusionismo." },
-  { id: 32, titulo: "Whiplash", ano: 2014, genero: "Drama/Música", nota: 8.5, imagem: "https://image.tmdb.org/t/p/w500/7fnE2X8X8X8X8X8X8X8X8X8X8X8.jpg", descricao: "Um jovem baterista é pressionado ao limite por um instrutor abusivo." },
-  { id: 33, titulo: "Intocáveis", ano: 2011, genero: "Comédia/Drama", nota: 8.5, imagem: "https://image.tmdb.org/t/p/w500/46lw7iC0059YEf75wL2z2z2z2z2.jpg", descricao: "A amizade improvável entre um aristocrata tetraplégico e seu cuidador vindo da periferia." },
-  { id: 34, titulo: "Mad Max: Estrada da Fúria", ano: 2015, genero: "Ação/Sci-Fi", nota: 8.1, imagem: "https://image.tmdb.org/t/p/w500/8tZYtuWeVSI2YlqVqWqWqWqWqWq.jpg", descricao: "Em um deserto pós-apocalíptico, uma mulher rebelde se une a Max para fugir de um tirano." },
+  { id: 32, titulo: "Whiplash", ano: 2014, genero: "Drama/Música", nota: 8.5, imagem: "https://placehold.co/600x900/1e1b4b/f8fafc?text=Whiplash", descricao: "Um jovem baterista é pressionado ao limite por um instrutor abusivo." },
+  { id: 33, titulo: "Intocáveis", ano: 2011, genero: "Comédia/Drama", nota: 8.5, imagem: "https://placehold.co/600x900/0f172a/fde68a?text=Intocaveis", descricao: "A amizade improvável entre um aristocrata tetraplégico e seu cuidador vindo da periferia." },
+  { id: 34, titulo: "Mad Max: Estrada da Fúria", ano: 2015, genero: "Ação/Sci-Fi", nota: 8.1, imagem: "https://placehold.co/600x900/451a03/f8fafc?text=Mad+Max", descricao: "Em um deserto pós-apocalíptico, uma mulher rebelde se une a Max para fugir de um tirano." },
   { id: 35, titulo: "Blade Runner 2049", ano: 2017, genero: "Sci-Fi/Drama", nota: 8.0, imagem: "https://image.tmdb.org/t/p/w500/gajva2L0rPYkEWjzgFlBXCAVBE5.jpg", descricao: "Um novo blade runner descobre um segredo que pode mergulhar a sociedade no caos." },
   { id: 36, titulo: "La La Land", ano: 2016, genero: "Musical/Romance", nota: 8.0, imagem: "https://image.tmdb.org/t/p/w500/uDO8zWDhfWwoFdKS4fzkUJt0Rf0.jpg", descricao: "Um pianista de jazz e uma atriz aspirante se apaixonam enquanto perseguem seus sonhos." },
-  { id: 37, titulo: "Corra!", ano: 2017, genero: "Terror/Suspense", nota: 7.7, imagem: "https://image.tmdb.org/t/p/w500/1D1D1D1D1D1D1D1D1D1D1D1D1D1.jpg", descricao: "Um jovem afro-americano visita a família de sua namorada branca e descobre segredos perturbadores." },
+  { id: 37, titulo: "Corra!", ano: 2017, genero: "Terror/Suspense", nota: 7.7, imagem: "https://placehold.co/600x900/111827/f8fafc?text=Corra", descricao: "Um jovem afro-americano visita a família de sua namorada branca e descobre segredos perturbadores." },
   { id: 38, titulo: "Pantera Negra", ano: 2018, genero: "Ação/Sci-Fi", nota: 7.3, imagem: "https://image.tmdb.org/t/p/w500/uxzzxijgPIY7slzFvMotPv8wjKA.jpg", descricao: "T'Challa retorna a Wakanda para assumir o trono, mas é desafiado por um inimigo do passado." },
   { id: 39, titulo: "Meu Malvado Favorito", ano: 2010, genero: "Animação/Comédia", nota: 7.6, imagem: "https://image.tmdb.org/t/p/w500/9lOloREsAhBu0pEtU0BgeR1rXct.jpg", descricao: "Um supervilão planeja roubar a lua, mas seus planos são atrapalhados por três órfãs." },
   { id: 40, titulo: "Divertida Mente", ano: 2015, genero: "Animação/Drama", nota: 8.1, imagem: "https://image.tmdb.org/t/p/w500/2H1TmgdfNtsKlU9jKdeNyYL5y8T.jpg", descricao: "As emoções dentro da cabeça de uma menina tentam guiá-la durante uma mudança difícil." },
@@ -52,78 +53,222 @@ const moviesData = [
   { id: 44, titulo: "2001: Uma Odisséia no Espaço", ano: 1968, genero: "Sci-Fi/Mistério", nota: 8.3, imagem: "https://image.tmdb.org/t/p/w500/ve72VxNqjGM69Uky4WTo2bK6rfq.jpg", descricao: "Humanidade encontra um monólito misterioso que influencia a evolução e a exploração espacial." },
   { id: 45, titulo: "O Pianista", ano: 2002, genero: "Drama/Guerra", nota: 8.5, imagem: "https://image.tmdb.org/t/p/w500/2hFvxCCWrTmCYwfy7yum0GKRi3Y.jpg", descricao: "Um pianista polonês judeu luta para sobreviver à destruição do gueto de Varsóvia." },
   { id: 46, titulo: "História de Casamento", ano: 2019, genero: "Drama/Romance", nota: 7.9, imagem: "https://image.tmdb.org/t/p/w500/pZekG6xabTmZxjmYRa10qPlCdG2.jpg", descricao: "Um casal em processo de divórcio lida com as disputas legais e emocionais." },
-  { id: 47, titulo: "Moonlight", ano: 2016, genero: "Drama", nota: 7.4, imagem: "https://image.tmdb.org/t/p/w500/4911T5FbJ9e72vQ9zZ2X2X2X2X2.jpg", descricao: "A jornada de um homem negro gay descobrindo sua identidade em três fases da vida." },
+  { id: 47, titulo: "Moonlight", ano: 2016, genero: "Drama", nota: 7.4, imagem: "https://placehold.co/600x900/0c4a6e/e0f2fe?text=Moonlight", descricao: "A jornada de um homem negro gay descobrindo sua identidade em três fases da vida." },
   { id: 48, titulo: "Nomadland", ano: 2020, genero: "Drama", nota: 7.3, imagem: "https://image.tmdb.org/t/p/w500/66GUmWpTHgAjyp4aBSXy63TITZt.jpg", descricao: "Uma mulher viaja pelos EUA vivendo em uma van após perder tudo na grande recessão." },
-  { id: 49, titulo: "Tudo em Todo o Lugar ao Mesmo Tempo", ano: 2022, genero: "Ação/Sci-Fi", nota: 7.8, imagem: "https://image.tmdb.org/t/p/w500/w3Lxiy7ycXUqQYt5q8X8X8X8X8X.jpg", descricao: "Uma imigrante chinesa é arrastada para uma aventura louca através do multiverso." },
+  { id: 49, titulo: "Tudo em Todo o Lugar ao Mesmo Tempo", ano: 2022, genero: "Ação/Sci-Fi", nota: 7.8, imagem: "https://placehold.co/600x900/14532d/d1fae5?text=Tudo+Em+Todo+Lugar", descricao: "Uma imigrante chinesa é arrastada para uma aventura louca através do multiverso." },
   { id: 50, titulo: "Oppenheimer", ano: 2023, genero: "Drama/Histórico", nota: 8.3, imagem: "https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg", descricao: "A história do físico J. Robert Oppenheimer e seu papel no desenvolvimento da bomba atômica." }
 ];
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState('Todos');
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
-  // Filtragem dos filmes
-  const filteredMovies = moviesData.filter(movie => 
-    movie.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    movie.genero.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const genres = ['Todos', ...new Set(moviesData.map((movie) => movie.genero))];
+
+  const filteredMovies = moviesData.filter((movie) => {
+    const normalizedTerm = searchTerm.toLowerCase();
+    const matchesTerm =
+      movie.titulo.toLowerCase().includes(normalizedTerm) ||
+      movie.genero.toLowerCase().includes(normalizedTerm);
+    const matchesGenre = selectedGenre === 'Todos' || movie.genero === selectedGenre;
+
+    return matchesTerm && matchesGenre;
+  });
+
+  const spotlightMovie = [...filteredMovies].sort((a, b) => b.nota - a.nota)[0] || moviesData[0];
+
+  const averageRating = (
+    moviesData.reduce((acc, movie) => acc + movie.nota, 0) / moviesData.length
+  ).toFixed(1);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 flex flex-col font-sans">
+    <div className="relative flex min-h-screen flex-col overflow-hidden bg-slate-950 text-gray-100">
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -left-28 top-20 h-72 w-72 rounded-full bg-amber-400/20 blur-3xl animate-pulse-glow" />
+        <div className="absolute -right-24 top-56 h-80 w-80 rounded-full bg-cyan-400/20 blur-3xl animate-pulse-glow" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.3),_rgba(2,6,23,0.95)_65%)]" />
+      </div>
+
       <Header />
 
-      <main className="flex-grow container mx-auto px-4 py-8 space-y-16">
-        
-        {/* Seção Hero */}
-        <section id="home" className="text-center py-10">
-          <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4">
-            Bem-vindo ao <span className="text-red-600">CineReact</span>
-          </h1>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Explore nossa coleção com 50 dos melhores filmes da história do cinema.
-          </p>
+      <main className="container mx-auto flex-grow space-y-16 px-4 py-8 md:py-10">
+        <section id="home" className="animate-rise-up rounded-3xl border border-white/10 bg-slate-900/70 p-6 shadow-2xl shadow-black/30 md:p-12">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_1fr]">
+            <div>
+              <p className="mb-4 inline-block rounded-full border border-amber-400/40 bg-amber-400/10 px-4 py-1 text-xs font-bold uppercase tracking-[0.2em] text-amber-300">
+                Curadoria Premium
+              </p>
+              <h1 className="mb-4 font-display text-5xl leading-[0.92] tracking-[0.07em] text-white md:text-7xl">
+                PIXELPLAY HUB
+              </h1>
+              <p className="max-w-2xl text-lg text-slate-300 md:text-xl">
+                Um catalogo moderno para descobrir classicos, buscar por genero e encontrar sua proxima sessao de cinema.
+              </p>
+
+              <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <div className="rounded-xl border border-white/10 bg-slate-950/70 p-4">
+                  <p className="text-2xl font-bold text-amber-300">{moviesData.length}</p>
+                  <p className="text-xs uppercase tracking-wider text-slate-400">Titulos</p>
+                </div>
+                <div className="rounded-xl border border-white/10 bg-slate-950/70 p-4">
+                  <p className="text-2xl font-bold text-cyan-300">{averageRating}</p>
+                  <p className="text-xs uppercase tracking-wider text-slate-400">Nota media</p>
+                </div>
+                <div className="rounded-xl border border-white/10 bg-slate-950/70 p-4">
+                  <p className="text-2xl font-bold text-emerald-300">{genres.length - 1}</p>
+                  <p className="text-xs uppercase tracking-wider text-slate-400">Generos</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-amber-500/25 via-cyan-500/10 to-slate-900 p-4 shadow-xl shadow-black/40">
+              <img
+                src={spotlightMovie.imagem}
+                alt={`Poster do filme ${spotlightMovie.titulo}`}
+                className="h-[410px] w-full rounded-2xl object-cover"
+                onError={(event) => {
+                  event.currentTarget.src = '/fallback-poster.svg';
+                }}
+              />
+              <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-t from-slate-950/95 via-slate-950/20 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-7">
+                <p className="mb-2 inline-block rounded-full border border-amber-300/60 bg-amber-300/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-200">
+                  No Holofote
+                </p>
+                <h2 className="text-3xl font-bold text-white">{spotlightMovie.titulo}</h2>
+                <p className="mt-1 text-sm text-slate-300">{spotlightMovie.ano} • {spotlightMovie.genero} • Nota {spotlightMovie.nota}</p>
+                <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-200">{spotlightMovie.descricao}</p>
+              </div>
+            </div>
+          </div>
         </section>
 
-        {/* Seção Catálogo */}
-        <section id="catalogo" className="space-y-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-gray-700 pb-4">
-            <h2 className="text-3xl font-bold text-white border-l-4 border-red-600 pl-4">
+        <section id="catalogo" className="space-y-7">
+          <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-slate-900/75 p-4 md:flex-row md:items-center md:justify-between">
+            <h2 className="border-l-4 border-amber-400 pl-4 text-3xl font-bold text-white">
               Catálogo Completo
             </h2>
-            
-            <input 
-              type="text" 
-              placeholder="Buscar filme ou gênero..." 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-gray-800 text-white px-4 py-2 rounded-lg border border-gray-600 focus:border-red-500 focus:outline-none w-full md:w-64 shadow-inner"
-            />
+
+            <div className="flex w-full flex-col gap-3 md:w-auto md:flex-row md:items-center">
+              <input
+                type="text"
+                placeholder="Buscar filme ou genero..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full rounded-lg border border-slate-700 bg-slate-800 px-4 py-2 text-white focus:border-amber-400 focus:outline-none md:w-64"
+              />
+
+              <select
+                value={selectedGenre}
+                onChange={(e) => setSelectedGenre(e.target.value)}
+                className="rounded-lg border border-slate-700 bg-slate-800 px-4 py-2 text-sm text-white focus:border-amber-400 focus:outline-none"
+              >
+                {genres.map((genre) => (
+                  <option key={genre} value={genre}>{genre}</option>
+                ))}
+              </select>
+            </div>
           </div>
 
           {filteredMovies.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filteredMovies.map((movie) => (
-                <MovieCard 
+                <MovieCard
                   key={movie.id}
                   {...movie}
+                  onViewDetails={() => setSelectedMovie(movie)}
                 />
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 bg-gray-800 rounded-xl border border-gray-700">
-              <p className="text-2xl text-gray-500">Nenhum filme encontrado para "{searchTerm}".</p>
+            <div className="rounded-2xl border border-white/10 bg-slate-900 p-16 text-center">
+              <p className="text-xl text-slate-400">
+                Nenhum filme encontrado para "{searchTerm}" em "{selectedGenre}".
+              </p>
             </div>
           )}
         </section>
 
-        {/* Seção Contato */}
-        <section id="contato" className="py-12 bg-gradient-to-r from-gray-800 to-gray-900 rounded-2xl p-4 md:p-10 shadow-2xl border border-gray-700">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-white">Fale com a Equipe</h2>
-            <p className="text-gray-400 mt-2">Sugira novos títulos para nossa coleção.</p>
+        <section id="contato" className="rounded-3xl border border-white/10 bg-gradient-to-r from-slate-900 via-slate-900 to-cyan-950/35 p-4 shadow-2xl shadow-black/30 md:p-10">
+          <div className="mb-10 text-center">
+            <h2 className="font-display text-5xl tracking-[0.1em] text-amber-300">Fale Com a Equipe</h2>
+            <p className="mt-2 text-slate-300">Sugira novos titulos e compartilhe ideias para a plataforma.</p>
           </div>
           <ContactForm />
         </section>
 
+        {selectedMovie && (
+          <div
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm"
+            role="dialog"
+            aria-modal="true"
+          >
+            <div className="relative max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-3xl border border-white/10 bg-slate-900 shadow-2xl shadow-black/50">
+              <button
+                onClick={() => setSelectedMovie(null)}
+                className="absolute right-4 top-4 rounded-full bg-slate-800 p-2 text-slate-200 transition hover:bg-slate-700"
+                aria-label="Fechar detalhes"
+              >
+                <FaTimes />
+              </button>
+
+              <div className="grid gap-6 p-6 md:grid-cols-[300px_1fr] md:p-8">
+                <img
+                  src={selectedMovie.imagem}
+                  alt={`Poster do filme ${selectedMovie.titulo}`}
+                  className="h-[420px] w-full rounded-2xl object-cover"
+                  onError={(event) => {
+                    event.currentTarget.src = '/fallback-poster.svg';
+                  }}
+                />
+
+                <div>
+                  <p className="mb-2 inline-block rounded-full border border-cyan-300/50 bg-cyan-300/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-cyan-200">
+                    Detalhes do filme
+                  </p>
+                  <h3 className="text-3xl font-bold text-white">{selectedMovie.titulo}</h3>
+                  <p className="mt-2 text-slate-300">{selectedMovie.ano} • {selectedMovie.genero}</p>
+
+                  <div className="mt-4 flex items-center gap-2 text-amber-300">
+                    <FaStar />
+                    <span className="text-lg font-bold">{selectedMovie.nota}</span>
+                    <span className="text-sm text-slate-400">avaliacao media</span>
+                  </div>
+
+                  <p className="mt-6 text-base leading-relaxed text-slate-200">
+                    {selectedMovie.descricao}
+                  </p>
+
+                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                    <div className="rounded-xl border border-white/10 bg-slate-800/60 p-3">
+                      <p className="text-xs uppercase tracking-wide text-slate-400">Genero</p>
+                      <p className="font-semibold text-white">{selectedMovie.genero}</p>
+                    </div>
+                    <div className="rounded-xl border border-white/10 bg-slate-800/60 p-3">
+                      <p className="text-xs uppercase tracking-wide text-slate-400">Ano de lancamento</p>
+                      <p className="font-semibold text-white">{selectedMovie.ano}</p>
+                    </div>
+                    <div className="rounded-xl border border-white/10 bg-slate-800/60 p-3">
+                      <p className="text-xs uppercase tracking-wide text-slate-400">Posicao no ranking</p>
+                      <p className="font-semibold text-white">
+                        #{[...moviesData].sort((a, b) => b.nota - a.nota).findIndex((movie) => movie.id === selectedMovie.id) + 1}
+                      </p>
+                    </div>
+                    <div className="rounded-xl border border-white/10 bg-slate-800/60 p-3">
+                      <p className="text-xs uppercase tracking-wide text-slate-400">Filmes no mesmo genero</p>
+                      <p className="font-semibold text-white">
+                        {
+                          moviesData.filter((movie) => movie.genero === selectedMovie.genero).length
+                        }
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
 
       <Footer />

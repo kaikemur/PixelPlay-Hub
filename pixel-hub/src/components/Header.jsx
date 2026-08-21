@@ -1,4 +1,4 @@
-import { FaFilm, FaBars, FaTimes} from 'react-icons/fa';
+import { FaFilm, FaBars, FaTimes } from 'react-icons/fa';
 import { useState } from 'react';
 
 const Header = () => {
@@ -9,37 +9,51 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gray-900 text-white shadow-lg sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <div className="flex items-center gap-2 text-2xl font-bold text-red-600">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/80 text-white backdrop-blur-xl">
+      <div className="container mx-auto flex items-center justify-between px-4 py-4">
+        <div className="flex items-center gap-3 text-2xl font-bold text-amber-400">
           <FaFilm />
-          <span>CineReact</span>
+          <span className="font-display text-3xl tracking-[0.16em]">PIXELPLAY</span>
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex gap-6">
-          <a href="#home" className="hover:text-red-500 transition-colors">Início</a>
-          <a href="#catalogo" className="hover:text-red-500 transition-colors">Catálogo</a>
-          <a href="#contato" className="hover:text-red-500 transition-colors">Contato</a>
+        <nav className="hidden items-center gap-7 text-sm font-semibold uppercase tracking-wider md:flex">
+          <a href="#home" className="transition-colors hover:text-amber-300">Início</a>
+          <a href="#catalogo" className="transition-colors hover:text-amber-300">Catálogo</a>
+          <a href="#contato" className="transition-colors hover:text-amber-300">Contato</a>
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden text-2xl focus:outline-none"
+        <div className="hidden md:block">
+          <a
+            href="#catalogo"
+            className="rounded-full border border-amber-400/60 bg-amber-400/10 px-4 py-2 text-sm font-semibold text-amber-300 transition hover:bg-amber-400 hover:text-slate-900"
+          >
+            Explorar agora
+          </a>
+        </div>
+
+        <button
+          className="text-2xl md:hidden"
           onClick={toggleMenu}
-          aria-label="Toggle menu"
+          aria-label="Alternar menu"
         >
           {isMenuOpen ? <FaTimes /> : <FaBars />}
         </button>
       </div>
 
-      {/* Mobile Navigation */}
       {isMenuOpen && (
-        <nav className="md:hidden bg-gray-800 p-4 flex flex-col gap-4 border-t border-gray-700">
-          <a href="#home" className="block hover:text-red-500" onClick={toggleMenu}>Início</a>
-          <a href="#catalogo" className="block hover:text-red-500" onClick={toggleMenu}>Catálogo</a>
-          <a href="#contato" className="block hover:text-red-500" onClick={toggleMenu}>Contato</a>
+        <nav className="border-t border-white/10 bg-slate-900/95 p-4 md:hidden">
+          <div className="flex flex-col gap-4 font-semibold uppercase tracking-wide">
+            <a href="#home" className="hover:text-amber-300" onClick={toggleMenu}>Início</a>
+            <a href="#catalogo" className="hover:text-amber-300" onClick={toggleMenu}>Catálogo</a>
+            <a href="#contato" className="hover:text-amber-300" onClick={toggleMenu}>Contato</a>
+            <a
+              href="#catalogo"
+              className="mt-2 rounded-full bg-amber-400 px-4 py-2 text-center text-slate-900"
+              onClick={toggleMenu}
+            >
+              Explorar agora
+            </a>
+          </div>
         </nav>
       )}
     </header>

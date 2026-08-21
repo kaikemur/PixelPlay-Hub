@@ -15,7 +15,8 @@ const Button = ({
     primary: "bg-red-600 hover:bg-red-700 text-white focus:ring-red-500",
     secondary: "bg-gray-700 hover:bg-gray-600 text-white focus:ring-gray-500",
     outline: "border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white focus:ring-red-500",
-    ghost: "text-gray-300 hover:text-white hover:bg-gray-800"
+    ghost: "text-gray-300 hover:text-white hover:bg-gray-800",
+    dark: "bg-zinc-900 hover:bg-zinc-800 text-white focus:ring-zinc-700"
   };
 
   const disabledStyles = "opacity-50 cursor-not-allowed pointer-events-none";

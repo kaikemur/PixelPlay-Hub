@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { FaTimes, FaStar } from 'react-icons/fa';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import MovieCard from './components/MovieCard';
 import ContactForm from './components/ContactForm';
+import SpotlightCard from './components/SpotlightCard';
+import MovieDetailsModal from './components/MovieDetailsModal';
+import AboutSection from './components/AboutSection';
 
 // Lista diversificada de 50 filmes classicos e modernos
 const moviesData = [
@@ -122,25 +124,7 @@ function App() {
               </div>
             </div>
 
-            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-amber-500/25 via-cyan-500/10 to-slate-900 p-4 shadow-xl shadow-black/40">
-              <img
-                src={spotlightMovie.imagem}
-                alt={`Poster do filme ${spotlightMovie.titulo}`}
-                className="h-[410px] w-full rounded-2xl object-cover"
-                onError={(event) => {
-                  event.currentTarget.src = '/fallback-poster.svg';
-                }}
-              />
-              <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-t from-slate-950/95 via-slate-950/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-7">
-                <p className="mb-2 inline-block rounded-full border border-amber-300/60 bg-amber-300/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-amber-200">
-                  No Holofote
-                </p>
-                <h2 className="text-3xl font-bold text-white">{spotlightMovie.titulo}</h2>
-                <p className="mt-1 text-sm text-slate-300">{spotlightMovie.ano} • {spotlightMovie.genero} • Nota {spotlightMovie.nota}</p>
-                <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-200">{spotlightMovie.descricao}</p>
-              </div>
-            </div>
+            <SpotlightCard movie={spotlightMovie} />
           </div>
         </section>
 
@@ -198,77 +182,13 @@ function App() {
           <ContactForm />
         </section>
 
-        {selectedMovie && (
-          <div
-            className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm"
-            role="dialog"
-            aria-modal="true"
-          >
-            <div className="relative max-h-[90vh] w-full max-w-4xl overflow-y-auto rounded-3xl border border-white/10 bg-slate-900 shadow-2xl shadow-black/50">
-              <button
-                onClick={() => setSelectedMovie(null)}
-                className="absolute right-4 top-4 rounded-full bg-slate-800 p-2 text-slate-200 transition hover:bg-slate-700"
-                aria-label="Fechar detalhes"
-              >
-                <FaTimes />
-              </button>
+        <AboutSection />
 
-              <div className="grid gap-6 p-6 md:grid-cols-[300px_1fr] md:p-8">
-                <img
-                  src={selectedMovie.imagem}
-                  alt={`Poster do filme ${selectedMovie.titulo}`}
-                  className="h-[420px] w-full rounded-2xl object-cover"
-                  onError={(event) => {
-                    event.currentTarget.src = '/fallback-poster.svg';
-                  }}
-                />
-
-                <div>
-                  <p className="mb-2 inline-block rounded-full border border-cyan-300/50 bg-cyan-300/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-cyan-200">
-                    Detalhes do filme
-                  </p>
-                  <h3 className="text-3xl font-bold text-white">{selectedMovie.titulo}</h3>
-                  <p className="mt-2 text-slate-300">{selectedMovie.ano} • {selectedMovie.genero}</p>
-
-                  <div className="mt-4 flex items-center gap-2 text-amber-300">
-                    <FaStar />
-                    <span className="text-lg font-bold">{selectedMovie.nota}</span>
-                    <span className="text-sm text-slate-400">avaliacao media</span>
-                  </div>
-
-                  <p className="mt-6 text-base leading-relaxed text-slate-200">
-                    {selectedMovie.descricao}
-                  </p>
-
-                  <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-xl border border-white/10 bg-slate-800/60 p-3">
-                      <p className="text-xs uppercase tracking-wide text-slate-400">Genero</p>
-                      <p className="font-semibold text-white">{selectedMovie.genero}</p>
-                    </div>
-                    <div className="rounded-xl border border-white/10 bg-slate-800/60 p-3">
-                      <p className="text-xs uppercase tracking-wide text-slate-400">Ano de lancamento</p>
-                      <p className="font-semibold text-white">{selectedMovie.ano}</p>
-                    </div>
-                    <div className="rounded-xl border border-white/10 bg-slate-800/60 p-3">
-                      <p className="text-xs uppercase tracking-wide text-slate-400">Posicao no ranking</p>
-                      <p className="font-semibold text-white">
-                        #{[...moviesData].sort((a, b) => b.nota - a.nota).findIndex((movie) => movie.id === selectedMovie.id) + 1}
-                      </p>
-                    </div>
-                    <div className="rounded-xl border border-white/10 bg-slate-800/60 p-3">
-                      <p className="text-xs uppercase tracking-wide text-slate-400">Filmes no mesmo genero</p>
-                      <p className="font-semibold text-white">
-                        {
-                          moviesData.filter((movie) => movie.genero === selectedMovie.genero).length
-                        }
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        <MovieDetailsModal
+          movie={selectedMovie}
+          allMovies={moviesData}
+          onClose={() => setSelectedMovie(null)}
+        />
       </main>
 
       <Footer />
